@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/gofiber/fiber/v3"
+	"github.com/gofiber/fiber/v3/middleware/cors"
 
 	"hrms-attendance/db"
 	"hrms-attendance/internal/attendance"
@@ -30,6 +31,29 @@ func main() {
 	// =========================================================
 
 	app := fiber.New()
+
+	// =========================================================
+    // CORS
+    // =========================================================
+
+    app.Use(cors.New(cors.Config{
+		AllowOrigins: []string{
+			"http://localhost:5173",
+        },
+        AllowMethods: []string{
+			fiber.MethodGet,
+            fiber.MethodPost,
+            fiber.MethodPut,
+            fiber.MethodDelete,  
+            fiber.MethodOptions,
+        },
+        AllowHeaders: []string{
+			fiber.HeaderOrigin,
+            fiber.HeaderContentType,
+            fiber.HeaderAccept,
+            fiber.HeaderAuthorization,
+        },
+    }))
 
 	// =========================================================
 	// ATTENDANCE MODULE
